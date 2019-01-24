@@ -36,9 +36,9 @@ namespace TrxToSonar
             }
 
             var pathIndex = className.LastIndexOf(".", StringComparison.Ordinal);
-            var pathIndexLast = unitTest.TestMethod.CodeBase.IndexOf("\\bin\\", StringComparison.Ordinal);
+            var pathIndexLast = unitTest.TestMethod.CodeBase.Replace('\\', '/').IndexOf("/bin/", StringComparison.Ordinal);
             var path = unitTest.TestMethod.CodeBase.Substring(0, pathIndexLast);
-            var pathIndexFirst = path.LastIndexOf("\\", StringComparison.Ordinal);
+            var pathIndexFirst = path.LastIndexOf("/", StringComparison.Ordinal);
             path = path.Substring(pathIndexFirst + 1);
             
             var filename = className.Substring(pathIndex + 1, className.Length - pathIndex - 1);
@@ -54,7 +54,7 @@ namespace TrxToSonar
                 result = string.Format("{0}.cs", Path.Combine(solutionDirectory, path, filename));
             }
 
-            return result.Replace(" ", "\\\\ ");
+            return result.Replace(" ", "/ ");
         }
     }
 }
